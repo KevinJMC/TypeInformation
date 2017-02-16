@@ -10,9 +10,11 @@ public class TypeInfo {
 
   boolean classImplementsInterface(Object o, String interfaceName) {}
 
+  boolean classImplementsInterface(Class clazz, String interfaceName) {}
+
   String listAllMembers(Object o) {}
 
   String getClassHierarchy(Object o) {}
 
-  List instantiateClassHierarchy (Object o) {}
+  List<Object> instantiateClassHierarchy (Object o) {}
 }
