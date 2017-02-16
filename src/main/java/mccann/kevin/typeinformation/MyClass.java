@@ -6,7 +6,6 @@ package mccann.kevin.typeinformation;
 public class MyClass extends MySuperClass implements MyInterface {
     int myField;
 
-
     @Override
     public int myMethod() {
         return myField;

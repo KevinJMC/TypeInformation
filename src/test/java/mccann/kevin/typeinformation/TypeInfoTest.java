@@ -22,13 +22,13 @@ public class TypeInfoTest {
     }
 
     @Test
-    public void classImplementsInterfaceStringTest() {
-        assertTrue(typeInfo.classImplementsInterface("MyClass", "MyInterface"));
+    public void classImplementsInterfaceStringTest() throws ClassNotFoundException{
+        assertTrue(typeInfo.classImplementsInterface("mccann.kevin.typeinformation.MyClass", "MyInterface"));
     }
 
     @Test
     public void classImplementsInterfaceClassTest(){
-        assertTrue(typeInfo.classImplementsInterface(MyClass.class, "MyInterface"));
+        assertTrue("MyClass doesn't implement MyInterface", typeInfo.classImplementsInterface(MyClass.class, "MyInterface"));
     }
 
     @Test
@@ -37,23 +37,27 @@ public class TypeInfoTest {
     }
 
     @Test
-    public void listAllMembersTest() {
-        String expected = "MyClass myField\nMyClass public myMethod\nMySuperClass public sayGirlSay\n" +
-                "Object protected clone\nObject equals\nObject finalize\nObject getClass\nObject hashCode\n" +
-                "Object notify\nObject notifyAll\nObject toString\nObject wait";
+    public void listAllMembersTest() throws NoSuchMethodException {
+        String expected = "MyClass  myField\nMyClass mccann.kevin.typeinformation.MyClass\nMyClass public myMethod\n" +
+                "MySuperClass mccann.kevin.typeinformation.MySuperClass\nMySuperClass public sayGirlSay\n" +
+                "Object java.lang.Object\nObject protected native clone\nObject public equals\n" +
+                "Object protected finalize\nObject public final native getClass\nObject public native hashCode\n" +
+                "Object public final native notify\nObject public final native notifyAll\n" +
+                "Object private static native registerNatives\nObject public toString\n" +
+                "Object public final wait\n";
         String actual = typeInfo.listAllMembers(myClass);
         assertEquals(expected,actual);
     }
 
     @Test
     public void getClassHierarchyTest() {
-        String expected = "MyClass\n  MySuperClass\n    java.lang.Object";
+        String expected = "MyClass\n\tMySuperClass\n\t\tObject\n";
         String actual = typeInfo.getClassHierarchy(myClass);
         assertEquals(expected,actual);
     }
 
     @Test
-    public void instantiateClassHierarchyTest() {
+    public void instantiateClassHierarchyTest() throws Exception{
         List<Object> classHierarchy = typeInfo.instantiateClassHierarchy(myClass);
         assertTrue(classHierarchy.get(0) instanceof MyClass);
         assertTrue(classHierarchy.get(1) instanceof MySuperClass);
